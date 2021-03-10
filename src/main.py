@@ -1,78 +1,136 @@
 import turtle
 import random
 import math
-from tkinter import *
+from tkinter import messagebox
 import sys
 import winsound
 
 # Creating the window to display maze
+
 win = turtle.Screen()
 win.title("Maze game")
 win.bgcolor("grey")
 win.setup(width=900, height=900)
 
-
-#Register shapes
+# Register shapes
 turtle.register_shape("Images/wall.gif")
+turtle.register_shape("Images/brick.gif")
+turtle.register_shape("Images/brick1.gif")
+
 
 # Creating blocks class
 class Blocks(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape("Images/wall.gif")
+        self.shape("Images/brick1.gif")
         self.penup()
         self.speed(0)
+        messagebox.showinfo("Story", "Welcome to an adventure"
+                                     "To a scary adventure")
+
+
+# Creating player class
+class Player(turtle.Turtle):
+    def __init__(self):
+        turtle.Turtle.__init__(self)
+        self.shape("circle")
+        self.color("red")
+        self.penup()
+        self.speed(0)
+        self.gold = 0
+
+    # Player movement
+    def go_up(self):
+        move_to_x = player.xcor()
+        move_to_y = player.ycor() + 24
+        if (move_to_x, move_to_y) not in walls:
+            self.goto(move_to_x, move_to_y)
+
+    def go_down(self):
+        move_to_x = player.xcor()
+        move_to_y = player.ycor() - 24
+        if (move_to_x, move_to_y) not in walls:
+            self.goto(move_to_x, move_to_y)
+
+    def go_right(self):
+        move_to_x = player.xcor() + 24
+        move_to_y = player.xcor()
+        if (move_to_x, move_to_y) not in walls:
+            self.goto(move_to_x, move_to_y)
+
+    def go_left(self):
+        move_to_x = player.xcor() - 24
+        move_to_y = player.xcor()
+        if (move_to_x, move_to_y) not in walls:
+            self.goto(move_to_x, move_to_y)
+
 
 
 # Creating first map
 map = [""]
 map_1 = [
-"XXXXXXXXXXXXXXXXXXXXXXXXX",
-"X        XXXXX   XXXXXXXX",
-"XXXXX    XXXXX   XXXXXXXX",
-"XXXXX    XXXXX   XXXXXXXX",
-"XX                      X",
-"XX          XXXXX  XXXXXX",
-"XX          XXXXX  XX EXX",
-"XX              X  XX  XX",
-"XX          XXXXX  XX  XX",
-"XX     XX   XXXXX  XX  XX",
-"XX     XX              XX",
-"XX     XX     XXXXXXX  XX",
-"XX     XX    TXXXXXXX  XX",
-"XXXXXXXXX   XXXXXXX    XX",
-"XXXXXXXXX        XXXXXXXX",
-"X                      XX",
-"X  XX     XXXXXXXXX    XX",
-"X  XX     XXX    XX    XX",
-"X  XX    TXXX    XX    XX",
-"XXXXX   XXXXX          XX",
-"XXXXX   XXXXX    XX    XX",
-"XXXXX              XXXXXX",
-"XX      XXXXXX     XXXXXX",
-"XX      XXXXXX        XXX",
-"XXXXXXXXXXXXXXXXXXXXXXXXX"
+    "XXXXXXXXXXXXXXXXXXXXXXXXX",
+    "XP       XXXXX   XXXXXXXX",
+    "XXXXX    XXXXX   XXXXXXXX",
+    "XXXXX    XXXXX   XXXXXXXX",
+    "XX                      X",
+    "XX          XXXXX  XXXXXX",
+    "XX          XXXXX  XX  XX",
+    "XX              X  XX  XX",
+    "XX          XXXXX  XX  XX",
+    "XX     XX   XXXXX  XX  XX",
+    "XX     XX              XX",
+    "XX     XX     XXXXXXX  XX",
+    "XX     XX    TXXXXXXX  XX",
+    "XXXXXXXXX   XXXXXXX    XX",
+    "XXXXXXXXX        XXXXXXXX",
+    "X                      XX",
+    "X  XX     XXXXXXXXX    XX",
+    "X  XX     XXX    XX    XX",
+    "X  XX    TXXX    XX    XX",
+    "XXXXX   XXXXX          XX",
+    "XXXXX   XXXXX    XX    XX",
+    "XXXXX              XXXXXX",
+    "XX      XXXXXX     XXXXXX",
+    "XX      XXXXXX        XXX",
+    "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 
-#Creating map setup function
+
+# Creating map setup function
 def setup_maze(map):
     for y in range(len(map)):
         for x in range(len(map[y])):
-            player = map[y][x]
+            character = map[y][x]
             screen_x = -288 + (x * 24)
             screen_y = 288 - (y * 24)
 
-            if player == "X":
+            if character == "X":
                 blocks.goto(screen_x, screen_y)
                 blocks.stamp()
 
-#Append map
+            if character == "P":
+                player.goto(screen_x, screen_y)
+
+
+# Append map
 map.append(map_1)
 
-#Creating class instance
+# Creating class instance
 blocks = Blocks()
+player = Player()
 
-#Setup maze map
+# Keybinding
+turtle.listen()
+turtle.onkey(player.go_up, "Up")
+turtle.onkey(player.go_down, "Down")
+turtle.onkey(player.go_left, "Left")
+turtle.onkey(player.go_right, "Right")
+
+# Setup maze map
 setup_maze(map[1])
+
+# Create Walls
+walls = []
 
 turtle.done()
