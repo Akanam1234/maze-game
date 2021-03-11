@@ -10,7 +10,7 @@ import winsound
 win = turtle.Screen()
 win.title("Maze game")
 win.bgcolor("grey")
-win.setup(width=900, height=900)
+win.setup(width=700, height=700)
 
 # Register shapes
 turtle.register_shape("Images/wall.gif")
@@ -52,18 +52,27 @@ class Player(turtle.Turtle):
         if (move_to_x, move_to_y) not in walls:
             self.goto(move_to_x, move_to_y)
 
-    def go_right(self):
-        move_to_x = player.xcor() + 24
-        move_to_y = player.xcor()
-        if (move_to_x, move_to_y) not in walls:
-            self.goto(move_to_x, move_to_y)
-
     def go_left(self):
         move_to_x = player.xcor() - 24
-        move_to_y = player.xcor()
+        move_to_y = player.ycor()
         if (move_to_x, move_to_y) not in walls:
             self.goto(move_to_x, move_to_y)
 
+    def go_right(self):
+        move_to_x = player.xcor() + 24
+        move_to_y = player.ycor()
+        if (move_to_x, move_to_y) not in walls:
+            self.goto(move_to_x, move_to_y)
+
+    def is_collision(self, other):
+        a = self.xcor() - other.xcor()
+        b = self.ycor() - other.ycor()
+        distance = math.sqrt((a ** 2) + (b ** 2))
+
+        if distance < 5:
+            return True
+        else:
+            return False
 
 
 # Creating first map
@@ -96,25 +105,31 @@ map_1 = [
     "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 
+# Append map
+map.append(map_1)
+
 
 # Creating map setup function
-def setup_maze(map):
-    for y in range(len(map)):
-        for x in range(len(map[y])):
-            character = map[y][x]
+def setup_maze(level):
+    for y in range(len(level)):
+        for x in range(len(level[y])):
+            character = level[y][x]
             screen_x = -288 + (x * 24)
             screen_y = 288 - (y * 24)
 
+            # Check if it is an X representing a wall
             if character == "X":
                 blocks.goto(screen_x, screen_y)
                 blocks.stamp()
+                # Add coordinates to wall list
+                walls.append((screen_x, screen_y))
 
             if character == "P":
                 player.goto(screen_x, screen_y)
 
 
-# Append map
-map.append(map_1)
+# Create Walls
+walls = []
 
 # Creating class instance
 blocks = Blocks()
@@ -129,8 +144,5 @@ turtle.onkey(player.go_right, "Right")
 
 # Setup maze map
 setup_maze(map[1])
-
-# Create Walls
-walls = []
 
 turtle.done()
