@@ -73,6 +73,10 @@ class Player(turtle.Turtle):
             return True
         else:
             return False
+class Treasure(turtle.Turtle):
+    def __init__(self):
+        turtle.Turtle.__init__(self)
+        self.shape("square")
 
 
 # Creating first map
@@ -96,7 +100,7 @@ map_1 = [
     "X                      XX",
     "X  XX     XXXXXXXXX    XX",
     "X  XX     XXX    XX    XX",
-    "X  XX    TXXX    XX    XX",
+    "X  XX    XXXX    XX    XX",
     "XXXXX   XXXXX          XX",
     "XXXXX   XXXXX    XX    XX",
     "XXXXX              XXXXXX",
