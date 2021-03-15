@@ -16,6 +16,7 @@ win.setup(width=700, height=700)
 turtle.register_shape("Images/wall.gif")
 turtle.register_shape("Images/brick.gif")
 turtle.register_shape("Images/brick1.gif")
+turtle.register_shape("Images/coins.gif")
 
 
 # Creating blocks class
@@ -33,8 +34,7 @@ class Blocks(turtle.Turtle):
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape("circle")
-        self.color("red")
+        self.shape("Images/coins.gif")
         self.penup()
         self.speed(0)
         self.gold = 0
@@ -73,10 +73,16 @@ class Player(turtle.Turtle):
             return True
         else:
             return False
+
+
 class Treasure(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape("square")
+        self.shape("Images/coins.gif")
+        self.penup()
+        self.speed(0)
+        self.gold = 100
+        self.goto(x, y)
 
 
 # Creating first map
