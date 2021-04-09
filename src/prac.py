@@ -12,10 +12,15 @@ wn.setup(700, 700)
 wn.tracer(0)
 
 # Play Sound
-
+winsound.PlaySound("Maze_Music", winsound.SND_ASYNC)
 
 # Register shapes
-
+turtle.register_shape("Jake_Guy.gif")
+turtle.register_shape("Cobble_Moss.gif")
+turtle.register_shape("Chest_Treasure.gif")
+turtle.register_shape("Thing_Right.gif")
+turtle.register_shape("Thing_Left.gif")
+turtle.register_shape("Exit_Door.gif")
 
 
 # Create Pen
@@ -38,7 +43,7 @@ class Pen(turtle.Turtle):
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.shape("square")
+        self.shape("Jake_Guy.gif")
         self.color("blue")
         self.penup()
         self.speed(0)
@@ -82,7 +87,7 @@ class Player(turtle.Turtle):
 class Treasure(turtle.Turtle):
     def __init__(self, x, y):
         turtle.Turtle.__init__(self)
-        self.shape("triangle")
+        self.shape("Chest_Treasure.gif")
         self.color("gold")
         self.penup()
         self.speed(0)
@@ -97,7 +102,7 @@ class Treasure(turtle.Turtle):
 class Gate(turtle.Turtle):
     def __init__(self, x, y):
         turtle.Turtle.__init__(self)
-        self.shape("circle")
+        self.shape("Exit_Door.gif")
         self.color("pink")
         self.penup()
         self.speed(0)
@@ -112,7 +117,7 @@ class Gate(turtle.Turtle):
 class Enemy(turtle.Turtle):
     def __init__(self, x, y):
         turtle.Turtle.__init__(self)
-        self.shape("circle")
+        self.shape("Thing_Left.gif")
         self.color("red")
         self.penup()
         self.speed(0)
@@ -130,11 +135,11 @@ class Enemy(turtle.Turtle):
         elif self.direction == "left":
             dx = -24
             dy = 0
-            self.shape("circle")
+            self.shape("Thing_Left.gif")
         elif self.direction == "right":
             dx = 24
             dy = 0
-            self.shape("circle")
+            self.shape("Thing_Right.gif")
         else:
             dx = 0
             dy = 0
@@ -238,7 +243,7 @@ def setup_maze(level):
             # Check if it is an X representing a wall
             if character == "X":
                 pen.goto(screen_x, screen_y)
-                pen.shape("square")
+                pen.shape("Cobble_Moss.gif")
                 pen.stamp()
                 # Add coordinates to wall list
                 walls.append((screen_x, screen_y))
@@ -305,11 +310,10 @@ while True:
             messagebox.showinfo("Congratulations", "You reached the first gate")
         pen.clear()
 
-        if levels == ("level1"):
+        if maze == ("level1"):
             setup_maze(levels[2])
-            levels = ("level2")
+            maze = ("level2")
         else:
             turtle.bye()
 
     wn.update()
-
