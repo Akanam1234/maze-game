@@ -6,6 +6,7 @@ import pathlib
 import sys
 import winsound
 
+
 # Creating the window to display maze
 
 win = turtle.Screen()
@@ -29,6 +30,8 @@ turtle.register_shape("Sprites/GameOverBackground.gif")
 turtle.register_shape("Sprites/OpenTreasure.gif")
 turtle.register_shape("Sprites/wizz_left.gif")
 turtle.register_shape("Sprites/wizz_right.gif")
+
+
 
 
 # Creating blocks class
@@ -83,6 +86,18 @@ class Player(turtle.Turtle):
             return True
         else:
             return False
+
+class Club(turtle.Turtle) :
+    def __init__(self, x, y):
+        turtle.Turtle.__init__(self)
+        self.penup()
+        self.speed(0)
+        self.name = "club"
+        self.goto(x, y)
+
+    # def hide(self):
+    #     hide_sprite(self)
+
 
 
 class Treasure(turtle.Turtle):
@@ -171,6 +186,7 @@ class Enemy(turtle.Turtle):
     def destroy(self):
         self.goto(2000, 2000)
         self.hideturtle()
+
 
 
 # Creating map setup function
