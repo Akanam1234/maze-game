@@ -1,0 +1,17 @@
+Requirements:
+
+- User requires a working desktop or laptop
+- User must have a working keyboard
+- User is not visually impaired
+- User has a reasonable understanding of english
+
+
+User Interface
+
+Maze is design in python using the turtle module to draw the maze. Window has a width of 700 and a height of 700
+
+Each square has a grid block size of 24
+
+User controls the player using the arrow keys on their keyboard around the maze
+
+

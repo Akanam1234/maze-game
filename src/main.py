@@ -6,7 +6,6 @@ import pathlib
 import sys
 import winsound
 
-
 # Creating the window to display maze
 
 win = turtle.Screen()
@@ -25,13 +24,11 @@ turtle.register_shape("Sprites/person.gif")
 turtle.register_shape("Sprites/door.gif")
 turtle.register_shape("Sprites/B.gif")
 turtle.register_shape("Sprites/ClosedTreasure.gif")
-turtle.register_shape("Sprites/enemy.gif")
+turtle.register_shape("Sprites/player.gif")
 turtle.register_shape("Sprites/GameOverBackground.gif")
 turtle.register_shape("Sprites/OpenTreasure.gif")
 turtle.register_shape("Sprites/wizz_left.gif")
 turtle.register_shape("Sprites/wizz_right.gif")
-
-
 
 
 # Creating blocks class
@@ -49,9 +46,7 @@ class Wall(turtle.Turtle):
 class Player(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        # self.shape(Player_Skeleton)
-        self.shape("Sprites/enemy.gif")
-        # self.color('red')
+        self.shape("Sprites/player.gif")
         self.penup()
         self.speed(0)
         self.points = 0
@@ -87,7 +82,8 @@ class Player(turtle.Turtle):
         else:
             return False
 
-class Club(turtle.Turtle) :
+
+class Club(turtle.Turtle):
     def __init__(self, x, y):
         turtle.Turtle.__init__(self)
         self.penup()
@@ -97,7 +93,6 @@ class Club(turtle.Turtle) :
 
     # def hide(self):
     #     hide_sprite(self)
-
 
 
 class Treasure(turtle.Turtle):
@@ -116,7 +111,7 @@ class Treasure(turtle.Turtle):
 class Exit(turtle.Turtle):
     def __init__(self):
         turtle.Turtle.__init__(self)
-        self.color("white")
+        self.shape("Sprites/door.gif")
         self.penup()
         self.speed(0)
 
@@ -125,6 +120,7 @@ class Exit(turtle.Turtle):
         win.resetscreen()
         win.bgpic("Sprites/B.gif")
         win.tracer(0)
+
 
 class Lives(turtle.Turtle):
 
@@ -139,6 +135,7 @@ class Lives(turtle.Turtle):
 
     def showLives(self):
         self.write(self.lifecount, False, align='left', font=('Times New Roman', 14, 'bold'))
+
 
 class Points(turtle.Turtle):
 
@@ -157,6 +154,7 @@ class Points(turtle.Turtle):
         self.setposition(-80, 320)
         self.write('Level 1', False, align='left', font=('Times New Roman', 14, 'bold'))
 
+
 class Enemy(turtle.Turtle):
     def __init__(self, x, y):
         turtle.Turtle.__init__(self)
@@ -172,10 +170,10 @@ class Enemy(turtle.Turtle):
             self.shape("Sprites/wizz_right.gif")
 
     def move_enemy(self):
-        next_x = self.xcor() + 24*(self.direction == "L")\
-                 - 24*(self.direction == "R")
-        next_y = self.ycor() + 24*(self.direction == "U")\
-            - 24*(self.direction == "D")
+        next_x = self.xcor() + 24 * (self.direction == "L") \
+                 - 24 * (self.direction == "R")
+        next_y = self.ycor() + 24 * (self.direction == "U") \
+                 - 24 * (self.direction == "D")
 
         if (next_x, next_y) not in walls:
             self.goto(next_x, next_y)
@@ -188,12 +186,9 @@ class Enemy(turtle.Turtle):
         self.hideturtle()
 
 
-
 # Creating map setup function
 def setup_maze(level):
-
     livesBox.showLives()
-
 
     for y in range(len(level)):
         for x in range(len(level[y])):
@@ -230,7 +225,6 @@ def setup_maze(level):
 
 # Creating first map
 def setup_level(level):
-
     setup_maze(levels[level])
 
     win.onkey(player.move_down, "Down")
@@ -241,6 +235,7 @@ def setup_level(level):
 
     for enemy in enemies:
         turtle.ontimer(enemy.move_enemy, t=120)
+
 
 block = Wall()
 player = Player()
@@ -260,7 +255,7 @@ level_1 = [
     "X  X  XXXXXXX  X  X  X  X",
     "X  X  X     X  X  X     X",
     "X  XXXX  X  X  X  XXXXXXX",
-    "X  X     X     X        X",
+    "X  X     X     XT       X",
     "X  X  XXXXXXXXXXXXXXXX  X",
     "X     X             E   X",
     "X  XXXX  X  XXXXXXXXXX  X",
@@ -268,26 +263,26 @@ level_1 = [
     "X  X  X  X  XXXX  X  XXXX",
     "X  XE    X     X        X",
     "X  XXXX  XXXX  XXXXXXX  X",
-    "X     X     X       EX  X",
+    "X     X    TX       EX  X",
     "XXXX  XXXXXXX  XXXX  XXXX",
-    "X TX E      X  XE X     X",
+    "X TX        X  XE X     X",
     "X  XXXXXXX  X  X  XXXX  X",
     "X  X       TX     X     X",
     "X  X  XXXXXXXXXXXXX  X  X",
     "X     X     X       TX  X",
     "X  XXXX  X  X  XXXXXXX  X",
-    "X     E  X     X        I",
+    "X     E  X     XT       I",
     "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 level_2 = [
     "XXXXXXXXXXXXXXXXXXXXXXXXX",
-    "I          EX           X",
+    "IP          X           X",
     "X  XXXXXXX  XXXXXXXXXX  X",
     "X       EX     X     X  X",
     "X  XXXX  XXXX  X  X  X  X",
     "X  X  XE X  X     X    TX",
     "X  X  X  X  XXXX  XXXXXXX",
-    "X     X  X     X  XE    X",
+    "X     X  X     X  X     X",
     "X  XXXX  X  XXXX  XXXX  X",
     "X  X     XE       X     X",
     "XXXX  XXXXXXXXXX  X  XXXX",
@@ -296,20 +291,18 @@ level_2 = [
     "XE X  XXXX  XXXX  X  X  X",
     "X  X        X     X     X",
     "X  X  XXXXXXX  XXXXXXX  X",
-    "X  X     XT         EX  X",
+    "X  XT     X         EX  X",
     "X  XXXX  XXXXXXXXXXXXX  X",
     "X       E            X  X",
     "XXXXXXX  X  XXXXXXX     X",
-    "X        X     X  X    TX",
+    "XT       X     XT X    TX",
     "X  XXXXXXXXXX  X  XXXXXXX",
-    "XP                    E X",
+    "X                    E I",
     "XXXXXXXXXXXXXXXXXXXXXXXXX"
 ]
 
 levels.append(level_1)
 levels.append(level_2)
-
-
 
 setup_level(1)
 textbox.showLevel()
@@ -341,7 +334,7 @@ while True:
             reward.shape("Sprites/OpenTreasure.gif")
             player.points += reward.points
             # if reward.points == 100:
-                # turtle.write('Gold Acquired!', False, align='center', font=('Times New Roman', 60, 'bold'))
+            # turtle.write('Gold Acquired!', False, align='center', font=('Times New Roman', 60, 'bold'))
             pointsBox.clear()
             pointsBox.showPoints()
             print("Player Points: {}".format(player.points))
@@ -365,7 +358,3 @@ while True:
                 turtle.write('Game Over', False, align='center', font=('Times New Roman', 50, 'bold'))
 
     win.update()
-
-
-
-
